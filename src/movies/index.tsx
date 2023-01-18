@@ -16,6 +16,7 @@ import { fetchUser, Users, User } from "./api";
 
 
 import moment from "moment";
+import { title } from "process";
 
 // import * --> all our dialog files for <DefaultButton> Kreiranje / Azuriranje / Brisanje
 
@@ -68,12 +69,12 @@ export type Msg =
 // --- Update
 
 // Update --> (function) / based on Model & Message / place where my model gets transformed
-// case 'StartKreiranje' is the  action that will start the action cycle         pozvati fetchuser()
+// case 'StartKreiranje' is the  action that will start the action cycle 
 
 export const update = (msg: Msg, model: Model): [Model, Cmd.Cmd<Msg>] => {
   switch (msg.type) {
     case "StartFetchUser": {
-        return [model, send(fetchUser(model.yearSearch), (response) => ({ type: "FetchUser", data: response }))]
+        return [model, send(fetchUser(model.yearSearch), (response) => ({ type: "FetchUser", data: response , }))]
     }
     case "FetchUser": {
       return msg.data.fold(
@@ -100,21 +101,21 @@ const columns: IColumn[] = [
     name: "Title",
     minWidth: 250,
     maxWidth: 200,
-    onRender: (item: User) => <Stack>{item.Title}</Stack>,
+    onRender: (item: User) => <Stack>{item.data.Title}</Stack>,
   },
   {
     key: "year",
     name: "Year",
     minWidth: 250,
     maxWidth: 200,
-    onRender: (item: User) => <Stack>{item.Year}</Stack>,
+    onRender: (item: User) => <Stack>{item.data.Year}</Stack>,
   },
   {
     key: "imdbid",
     name: "ImdbID",
     minWidth: 250,
     maxWidth: 200,
-    onRender: (item: User) => <Stack>{item.imdbID}</Stack>,
+    onRender: (item: User) => <Stack>{item.data.ImdbID}</Stack>,
   }
 
 ];

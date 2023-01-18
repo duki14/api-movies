@@ -5,11 +5,15 @@ import { none } from "fp-ts/lib/Option";
 import { array } from "fp-ts/lib/Array";
 
 const ioUser = io.interface({
-  
-  Title: io.string,
-  Year: io.number,
-  imdbID: io.string
-
+  page: io.number,
+  per_page: io.number,
+  total: io.number,
+  total_pages: io.number,
+  data: io.array(io.interface({ 
+    Title: io.string,
+    Year: io.number,
+    imdbID: io.string
+  }))
 });
 
 
@@ -26,9 +30,22 @@ export type Users = io.TypeOf<typeof ioUsers>;
 export const fetchUser = (yearSearch: number | null ): Request<Users> => get(`https://jsonmock.hackerrank.com/api/movies/search?Year=${yearSearch}`, fromType(ioUsers));
 
 
+
 // export const fetchUser = (): Request<Users> => get('https://jsonmock.hackerrank.com/api/movies', fromType(ioUsers));
 // https://jsonmock.hackerrank.com/api/movies?=water
 
 // data koji je niz od ioUsers
 
 // napravim dodatni response
+
+
+/*
+
+const funk = (a) => {
+  return a + 1;
+}
+
+funk(5);
+
+
+*/
