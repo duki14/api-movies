@@ -5,10 +5,13 @@ import { none } from "fp-ts/lib/Option";
 import { array } from "fp-ts/lib/Array";
 
 const ioUser = io.interface({
+  
   Title: io.string,
   Year: io.number,
   imdbID: io.string
+
 });
+
 
 // referencing only one key from .JSON Users --> User
 export type User = io.TypeOf<typeof ioUser>;
@@ -20,7 +23,7 @@ const ioUsers = io.array(ioUser);
 export type Users = io.TypeOf<typeof ioUsers>;
 
 // Api call fn.
-export const fetchUser = (criteria: string | null ): Request<Users> => get(`https://jsonmock.hackerrank.com/api/movies/search?Title=${criteria}`, fromType(ioUsers));
+export const fetchUser = (yearSearch: number | null ): Request<Users> => get(`https://jsonmock.hackerrank.com/api/movies/search?Year=${yearSearch}`, fromType(ioUsers));
 
 
 // export const fetchUser = (): Request<Users> => get('https://jsonmock.hackerrank.com/api/movies', fromType(ioUsers));
@@ -28,3 +31,4 @@ export const fetchUser = (criteria: string | null ): Request<Users> => get(`http
 
 // data koji je niz od ioUsers
 
+// napravim dodatni response

@@ -35,7 +35,7 @@ import moment from "moment";
 
 export type Model = {
   data: Users | null,
-  criteria: string | null
+  yearSearch: number | null
 };
 
 
@@ -47,7 +47,7 @@ export type Model = {
 
 // send(fetchUser(), (response) => ({ type: "FetchUser", data: response })) --> instead of Cmd.none
 export const init: [Model, Cmd.Cmd<Msg>] = [
-  { data: null, criteria: null },
+  { data: null, yearSearch: null },
    Cmd.none
 ];
 
@@ -61,14 +61,10 @@ export const init: [Model, Cmd.Cmd<Msg>] = [
 export type Msg =
     { type: "StartFetchUser" }
   | { type: "FetchUser"; data: Either<HttpError, Users> }
-  | { type: "OnChangeForm"; value: string }
+  | { type: "OnChangeForm"; value: number }
   
   
   
-  
-
- 
-
 // --- Update
 
 // Update --> (function) / based on Model & Message / place where my model gets transformed
@@ -77,7 +73,7 @@ export type Msg =
 export const update = (msg: Msg, model: Model): [Model, Cmd.Cmd<Msg>] => {
   switch (msg.type) {
     case "StartFetchUser": {
-        return [model, send(fetchUser(model.criteria), (response) => ({ type: "FetchUser", data: response }))]
+        return [model, send(fetchUser(model.yearSearch), (response) => ({ type: "FetchUser", data: response }))]
     }
     case "FetchUser": {
       return msg.data.fold(
@@ -89,7 +85,7 @@ export const update = (msg: Msg, model: Model): [Model, Cmd.Cmd<Msg>] => {
       );
     }
     case "OnChangeForm": {
-      return [{ ...model, criteria: msg.value }, Cmd.none];
+      return [{ ...model, yearSearch: msg.value }, Cmd.none];
     }
 
   }
@@ -98,6 +94,7 @@ export const update = (msg: Msg, model: Model): [Model, Cmd.Cmd<Msg>] => {
 // Table component
 
 const columns: IColumn[] = [
+    
   {
     key: "title",
     name: "Title",
@@ -140,7 +137,7 @@ export const view =
             onChange={(_, newValue) =>
               dispatch({
                 type: "OnChangeForm",
-                value: newValue || '',
+                value: Number(newValue) || Number(''),
               })
             }
           />
