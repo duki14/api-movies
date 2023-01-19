@@ -4,7 +4,13 @@ import { fromType } from "elm-ts/lib/Decode";
 import { none } from "fp-ts/lib/Option";
 import { array } from "fp-ts/lib/Array";
 
-const ioUser = io.interface({
+const ioUser = io.interface({ 
+    Title: io.string,
+    Year: io.number,
+    imdbID: io.string
+  });
+
+const ioUsers = io.interface({
   page: io.number,
   per_page: io.number,
   total: io.number,
@@ -20,9 +26,6 @@ const ioUser = io.interface({
 // referencing only one key from .JSON Users --> User
 export type User = io.TypeOf<typeof ioUser>;
 
-// Runtime type --> all obj. keys from my .JSON file Users : [{ }]
-const ioUsers = io.array(ioUser);
-
 // Typescript type from Runtime type
 export type Users = io.TypeOf<typeof ioUsers>;
 
@@ -31,21 +34,3 @@ export const fetchUser = (yearSearch: number | null ): Request<Users> => get(`ht
 
 
 
-// export const fetchUser = (): Request<Users> => get('https://jsonmock.hackerrank.com/api/movies', fromType(ioUsers));
-// https://jsonmock.hackerrank.com/api/movies?=water
-
-// data koji je niz od ioUsers
-
-// napravim dodatni response
-
-
-/*
-
-const funk = (a) => {
-  return a + 1;
-}
-
-funk(5);
-
-
-*/

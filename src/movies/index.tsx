@@ -18,9 +18,6 @@ import { fetchUser, Users, User } from "./api";
 import moment from "moment";
 import { title } from "process";
 
-// import * --> all our dialog files for <DefaultButton> Kreiranje / Azuriranje / Brisanje
-
-// Dugme --> onClick za formu (dialog) / kreiranje
 
 // ### Ukoliko je Model komponente razlicit od undefined komponenta je pokrenuta
 
@@ -28,10 +25,6 @@ import { title } from "process";
 
 // --- Model  --> use type string even for numbers when using textfield (ex. phone: string)
 
-
-// true --> kad se vrti
-
-// false --> za fetch()
 
 
 export type Model = {
@@ -46,7 +39,6 @@ export type Model = {
 // init --> vraca tuple praznog modela (object) i Cmd.none -->  [Model, Cmd.Cmd<Msg>]
 // Cmd.none --> handles effects , use Cmd.none when we dont have an effect / in this case the affect is used for fetching my api Cmd<Msg>
 
-// send(fetchUser(), (response) => ({ type: "FetchUser", data: response })) --> instead of Cmd.none
 export const init: [Model, Cmd.Cmd<Msg>] = [
   { data: null, yearSearch: null },
    Cmd.none
@@ -57,7 +49,6 @@ export const init: [Model, Cmd.Cmd<Msg>] = [
 // all my actions through one single Msg component
 // define actions here
 // vrednosti nove u message-u (akcije) --> kroz njih prosledjujem da se update-uje model
-// Changedselected --> action at the top --> selecting ony one row from my  -->  azuriranje?:Azuriranje.Model
 
 export type Msg =
     { type: "StartFetchUser" }
@@ -69,7 +60,6 @@ export type Msg =
 // --- Update
 
 // Update --> (function) / based on Model & Message / place where my model gets transformed
-// case 'StartKreiranje' is the  action that will start the action cycle 
 
 export const update = (msg: Msg, model: Model): [Model, Cmd.Cmd<Msg>] => {
   switch (msg.type) {
@@ -101,21 +91,21 @@ const columns: IColumn[] = [
     name: "Title",
     minWidth: 250,
     maxWidth: 200,
-    onRender: (item: User) => <Stack>{item.data.map((item) => item.Title)}</Stack>,
+    onRender: (item: User) => item.Title
   },
   {
     key: "year",
     name: "Year",
     minWidth: 250,
     maxWidth: 200,
-    onRender: (item: User) => <Stack>{item.data.map((item) => item.Year)}</Stack>,
+    onRender: (item: User) => item.Year
   },
   {
     key: "imdbid",
     name: "ImdbID",
     minWidth: 250,
     maxWidth: 200,
-    onRender: (item: User) => <Stack>{item.data.map((item) => item.imdbID)}</Stack>,
+    onRender: (item: User) => item.imdbID
   }
 
 ];
@@ -152,7 +142,7 @@ export const view =
 
         <Stack grow={1}>
           <DetailsList
-            items={model.data || []}
+            items={model.data?.data || []}
             columns={columns}
           />
         </Stack>
@@ -161,3 +151,7 @@ export const view =
       </Stack>
     );
 
+
+
+
+    
