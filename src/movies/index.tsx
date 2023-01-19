@@ -101,21 +101,21 @@ const columns: IColumn[] = [
     name: "Title",
     minWidth: 250,
     maxWidth: 200,
-    onRender: (item: User) => <Stack>{item.data.Title}</Stack>,
+    onRender: (item: User) => <Stack>{item.data.map((item) => item.Title)}</Stack>,
   },
   {
     key: "year",
     name: "Year",
     minWidth: 250,
     maxWidth: 200,
-    onRender: (item: User) => <Stack>{item.data.Year}</Stack>,
+    onRender: (item: User) => <Stack>{item.data.map((item) => item.Year)}</Stack>,
   },
   {
     key: "imdbid",
     name: "ImdbID",
     minWidth: 250,
     maxWidth: 200,
-    onRender: (item: User) => <Stack>{item.data.ImdbID}</Stack>,
+    onRender: (item: User) => <Stack>{item.data.map((item) => item.imdbID)}</Stack>,
   }
 
 ];
